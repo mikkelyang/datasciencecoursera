@@ -3,4 +3,6 @@
 # Created by: mikkelyang
 # Created on: 06/10/2020
 
-matrix(1:9, nrow = 3, ncol = 3)
+#matrix(1:9, nrow = 3, ncol = 3)
+
+install.packages("rmarkdown")
