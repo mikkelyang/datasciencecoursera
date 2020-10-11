@@ -1,7 +1,0 @@
----
-title: "R Notebook"
-author: mikkelyang
-date: 07/10/2020
-output: html_notebook
----
-## This is a markdown file
