@@ -1,36 +1,26 @@
 #library(swirl)
 #install_from_swirl("R Programming")
 
-makeVector <- function(x = numeric()) {
-        m <- NULL
-        set <- function(y) {
-                x <<- y
-                m <<- NULL
-        }
-        get <- function() x
-        setmean <- function(mean) m <<- mean
-        getmean <- function() m
-        list(set = set, get = get,
-             setmean = setmean,
-             getmean = getmean)
+makeCacheMatrix <- function(x,nrow, ncol){
+        mat <- matrix(x, nrow, ncol)
+        inv <- NA
+        get <- function () mat
+        set_inverse <- function (inverse) inv <<- inverse
+        get_inverse <- function () inv
+        list(get=get, set_inverse=set_inverse, get_inverse=get_inverse)
 }
 
-cachemean <- function(x, ...) {
-        m <- x$getmean()
-        if(!is.null(m)) {
-                print("getting cached data")
-                return(m)
+cacheSolve <- function (x, ...){
+        inv <- x$get_inverse()
+        if(!is.na(inv)){
+                print('Getting from Cache')
+                return(inv)
         }
         data <- x$get()
-        m <- mean(data, ...)
-        x$setmean(m)
-        m
+        comp_inv <- solve(data)
+        x$set_inverse(comp_inv)
+        comp_inv
 }
 
-r<-c(3, 5, 9, 18, 17)
-aVector <- makeVector(r)
-print(aVector$get())
-# set the cache by running cachemean()
-#cachemean(aVector)
-# now, access the mean from the cache
-#cachemean(aVector)
+my_matrix <- makeCacheMatrix(c(3, 3.2, 3.5, 3.6), nrow=2, ncol=2)
+cacheSolve(my_matrix)
